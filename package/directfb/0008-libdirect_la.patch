@@ -1,0 +1,82 @@
+diff --git a/lib/direct/Makefile.am b/lib/direct/Makefile.am
+index 80ea26d..32349e8 100644
+--- a/lib/direct/Makefile.am
++++ b/lib/direct/Makefile.am
+@@ -145,6 +145,7 @@ libdirect_la_LIBADD = \
+ libdirect_la_LDFLAGS = \
+ 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+ 	-release $(LT_RELEASE)					\
++	-L$(top_builddir)/../../target/usr/lib \
+ 	$(DFB_LDFLAGS)
+ 
+ 
+diff --git a/lib/fusion/Makefile.am b/lib/fusion/Makefile.am
+index 0241309..04229a5 100644
+--- a/lib/fusion/Makefile.am
++++ b/lib/fusion/Makefile.am
+@@ -7,7 +7,8 @@ INCLUDES = \
+ 	-I$(top_builddir)/include	\
+ 	-I$(top_builddir)/lib		\
+ 	-I$(top_srcdir)/include		\
+-	-I$(top_srcdir)/lib
++	-I$(top_srcdir)/lib \
++	-I$(top_builddir)/../../target/usr/include
+ 
+ AM_CPPFLAGS = \
+ 	-DDATADIR=\"${RUNTIME_SYSROOT}@DATADIR@\"	\
+diff --git a/src/core/Makefile.am b/src/core/Makefile.am
+index cae0578..91d5375 100644
+--- a/src/core/Makefile.am
++++ b/src/core/Makefile.am
+@@ -6,7 +6,8 @@ INCLUDES = \
+ 	-I$(top_builddir)/src		\
+ 	-I$(top_srcdir)/include		\
+ 	-I$(top_srcdir)/lib		\
+-	-I$(top_srcdir)/src
++	-I$(top_srcdir)/src \
++	-I$(top_builddir)/../../target/usr/include
+ 
+ AM_CPPFLAGS = \
+ 	-DDATADIR=\"${RUNTIME_SYSROOT}@DATADIR@\"		\
+diff --git a/src/gfx/Makefile.am b/src/gfx/Makefile.am
+index 46c01e3..c1e833e 100644
+--- a/src/gfx/Makefile.am
++++ b/src/gfx/Makefile.am
+@@ -18,7 +18,8 @@ INCLUDES = \
+ 	-I$(top_builddir)/src		\
+ 	-I$(top_srcdir)/include		\
+ 	-I$(top_srcdir)/lib		\
+-	-I$(top_srcdir)/src
++	-I$(top_srcdir)/src \
++	-I$(top_builddir)/../../target/usr/include
+ 
+ 
+ internalincludedir = $(INTERNALINCLUDEDIR)/gfx
+diff --git a/src/gfx/generic/Makefile.am b/src/gfx/generic/Makefile.am
+index 078b9d3..e533a40 100644
+--- a/src/gfx/generic/Makefile.am
++++ b/src/gfx/generic/Makefile.am
+@@ -5,7 +5,8 @@ INCLUDES = \
+ 	-I$(top_builddir)/lib		\
+ 	-I$(top_srcdir)/include		\
+ 	-I$(top_srcdir)/lib		\
+-	-I$(top_srcdir)/src
++	-I$(top_srcdir)/src \
++	-I$(top_builddir)/../../target/usr/include
+ 
+ AM_CFLAGS = $(DFB_CFLAGS_OMIT_FRAME_POINTER)
+ 
+diff --git a/src/media/Makefile.am b/src/media/Makefile.am
+index a957faa..4a9ae90 100644
+--- a/src/media/Makefile.am
++++ b/src/media/Makefile.am
+@@ -6,7 +6,8 @@ INCLUDES = \
+ 	-I$(top_builddir)/src		\
+ 	-I$(top_srcdir)/include		\
+ 	-I$(top_srcdir)/lib		\
+-	-I$(top_srcdir)/src
++	-I$(top_srcdir)/src \
++	-I$(top_builddir)/../../target/usr/include
+ 
+ AM_CPPFLAGS = \
+ 	-DFLUXED_ARGS_BYTES=@FLUXED_ARGS_BYTES@
