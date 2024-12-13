@@ -1,0 +1,16 @@
+diff --git a/configure.ac b/configure.ac
+index 60a74c2..6fcfc23 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -65,6 +65,11 @@ if test "x$USE_GETTEXT" = "xyes" ; then
+ fi
+ AM_CONDITIONAL(USE_GETTEXT, test "x$USE_GETTEXT" = "xyes")
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
+ 
+ AC_CONFIG_FILES([
+ 	Makefile

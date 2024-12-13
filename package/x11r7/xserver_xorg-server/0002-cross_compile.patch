@@ -1,0 +1,18 @@
+diff --git a/configure b/configure
+index 146734d..b4b7dd7 100755
+--- a/configure
++++ b/configure
+@@ -3882,6 +3882,13 @@ printf "%s\n" "$as_me: error: changes in the environment can compromise the buil
+   as_fn_error $? "run \`${MAKE-make} distclean' and/or \`rm $cache_file'
+ 	    and start over" "$LINENO" 5
+ fi
++
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ ## -------------------- ##
+ ## Main body of script. ##
+ ## -------------------- ##

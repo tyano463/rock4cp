@@ -1,0 +1,49 @@
+diff --git a/configure.ac b/configure.ac
+index 692dc31..7278fcf 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -55,6 +55,16 @@ if test "$have_xrandr" = yes; then
+ 	AC_DEFINE([HAVE_XRANDR], [1], [Define to 1 if you have the xrandr headers/libraries])
+ fi
+ 
++AC_ARG_VAR(STAGING_DIR, [Staging directory for cross-compilation])
++AC_SUBST([STAGING_DIR])
++AM_CONDITIONAL(STAGING_DIR_SET, test -n "${STAGING_DIR}")
++
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 		src/Makefile
+ 		man/Makefile])
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 805eaf9..d5ca6f1 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -27,15 +27,21 @@ bin_PROGRAMS = twm
+ rcdir = ${datadir}/X11/twm
+ dist_rc_DATA = system.twmrc
+ 
++if STAGING_DIR_SET
++SYSROOT = --sysroot=$(STAGING_DIR) -I$(STAGING_DIR)/usr/include -L$(STAGING_DIR)/usr/lib
++else
++SYSROOT =
++endif
++
+ AM_CPPFLAGS =							\
+ 	-DAPP_NAME=\"twm\"					\
+ 	-DAPP_CLASS=\"twm\"					\
+ 	-DAPP_VERSION=\"$(VERSION)\"				\
+ 	-DXVENDORNAME=\"The\ X.Org\ Foundation\"		\
+ 	-DXORG_RELEASE=\"Release\ $(VERSION)\"			\
+-	-DSYSTEM_INIT_FILE=\"${rcdir}/system.twmrc\"
++	-DSYSTEM_INIT_FILE=\"${rcdir}/system.twmrc\" $(SYSROOT)
+ 
+-AM_CFLAGS = $(TWM_CFLAGS) $(XRANDR_CFLAGS)
++AM_CFLAGS = $(TWM_CFLAGS) $(XRANDR_CFLAGS) $(SYSROOT)
+ twm_LDADD = $(TWM_LIBS)   $(XRANDR_LIBS)
+ 
+ twm_SOURCES =		\

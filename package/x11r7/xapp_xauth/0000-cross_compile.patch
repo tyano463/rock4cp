@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 53c3e23..885b458 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -62,6 +62,12 @@ XTRANS_CONNECTION_FLAGS
+ 
+ XORG_WITH_LINT
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([
+ 	Makefile
+ 	tests/Makefile

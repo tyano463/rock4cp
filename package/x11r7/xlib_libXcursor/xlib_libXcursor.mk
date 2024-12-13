@@ -16,6 +16,10 @@ XLIB_LIBXCURSOR_DEPENDENCIES = xlib_libX11 xlib_libXfixes xlib_libXrender xorgpr
 HOST_XLIB_LIBXCURSOR_DEPENDENCIES = \
 	host-xlib_libX11 host-xlib_libXfixes host-xlib_libXrender \
 	host-xorgproto
+XLIB_LIBXCURSOR_AUTORECONF = YES
+XLIB_LIBXCURSOR_AUTORECONF_OPTS = --force
+HOST_XLIB_LIBXCURSOR_AUTORECONF = YES
+HOST_XLIB_LIBXCURSOR_AUTORECONF_OPTS = --force
 
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))

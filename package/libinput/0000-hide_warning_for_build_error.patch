@@ -1,0 +1,12 @@
+diff --git a/meson.build b/meson.build
+index 0479df1..0e8319d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -57,7 +57,6 @@ cflags = [
+ 	'-Winit-self',
+ 	'-Wstrict-prototypes',
+ 	'-Wimplicit-fallthrough',
+-	'-Wredundant-decls',
+ 	'-Wincompatible-pointer-types',
+ 	'-Wformat=2',
+ 	'-Wno-missing-field-initializers',

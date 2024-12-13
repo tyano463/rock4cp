@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index a40ac46..d8ad1e5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -192,6 +192,12 @@ AC_SUBST(XAUTH)
+ AC_SUBST(XINIT)
+ AC_SUBST(XINITDIR)
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 	man/Makefile
+ 	launchd/Makefile

@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 921b5fa..9eb24c2 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -80,6 +80,12 @@ AC_SUBST([OS_MOUSE_NAME])
+ DRIVER_NAME=mouse
+ AC_SUBST([DRIVER_NAME])
+ 
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+                  xorg-mouse.pc
+                  include/Makefile

@@ -14,5 +14,7 @@ XLIB_LIBXRES_CPE_ID_PRODUCT = libxres
 XLIB_LIBXRES_INSTALL_STAGING = YES
 XLIB_LIBXRES_DEPENDENCIES = xlib_libX11 xlib_libXext xorgproto
 XLIB_LIBXRES_CONF_OPTS = --disable-malloc0returnsnull
+XLIB_LIBXRES_AUTORECONF = YES
+XLIB_LIBXRES_AUTORECONF_OPTS = --force
 
 $(eval $(autotools-package))

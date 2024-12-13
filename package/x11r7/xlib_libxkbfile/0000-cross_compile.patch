@@ -1,0 +1,29 @@
+diff --git a/configure.ac b/configure.ac
+index 37767b5..19c4bfa 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -51,6 +51,12 @@ PKG_CHECK_MODULES(XKBFILE, x11 kbproto)
+ # Checks for typedefs, structures, and compiler characteristics.
+ AC_SYS_LARGEFILE
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 		src/Makefile
+ 		xkbfile.pc])
+diff --git a/ltmain.sh b/ltmain.sh
+index 0e501e7..85d8b89 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -2458,6 +2458,7 @@ func_enable_tag ()
+ # release of libtool.
+ func_check_version_match ()
+ {
++    macro_revision=2.4.7
+     if test "$package_revision" != "$macro_revision"; then
+       if test "$VERSION" != "$macro_version"; then
+         if test -z "$macro_version"; then

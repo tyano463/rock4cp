@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 1f25d6d..c3facb8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -53,6 +53,12 @@ if test x$use_present != xno ; then
+ 	AC_DEFINE([PRESENT],1,[Define to use X Present Extension])
+ fi
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([
+ 	Makefile
+ 	man/Makefile])

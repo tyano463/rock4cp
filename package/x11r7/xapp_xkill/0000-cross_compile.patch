@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 9664bd2..b221f1c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -40,6 +40,12 @@ XORG_DEFAULT_OPTIONS
+ # Checks for pkg-config packages
+ PKG_CHECK_MODULES(XKILL, [x11 xmuu xproto >= 7.0.22])
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([
+ 	Makefile
+ 	man/Makefile])

@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index fe88a01..dd04a5b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,6 +9,12 @@ XCB_UTIL_COMMON([1.4], [1.6])
+ 
+ PKG_CHECK_MODULES(XPROTO, xproto >= 7.0.8)
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 	keysyms/Makefile keysyms/xcb-keysyms.pc
+ 	])

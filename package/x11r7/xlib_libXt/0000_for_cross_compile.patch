@@ -1,0 +1,40 @@
+diff --git a/configure.ac b/configure.ac
+index d7c7dc0..334bca6 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -76,6 +76,11 @@ if test x"$cross_compiling" != xyes; then
+        : ${CFLAGS_FOR_BUILD=${CFLAGS}}
+        : ${LDFLAGS_FOR_BUILD=${LDFLAGS}}
+ fi
++
++AC_ARG_VAR(STAGING_DIR, [Staging directory for cross-compilation])
++AC_SUBST([STAGING_DIR])
++AM_CONDITIONAL(STAGING_DIR_SET, test -n "${STAGING_DIR}")
++
+ AC_SUBST([CC_FOR_BUILD])
+ DEFAULT_CPPFLAGS_FOR_BUILD="${CPPFLAGS}"
+ AC_CHECK_FUNC(asprintf,
+diff --git a/src/Makefile.am b/src/Makefile.am
+index a26e10d..e596f7b 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -6,11 +6,17 @@ CLEANFILES = $(BUILT_SOURCES)
+ SRCH_DEFINES = -DXFILESEARCHPATHDEFAULT=\"$(XFILESEARCHPATHDEFAULT)\"
+ ERRORDB_DEFINES = -DERRORDB=\"$(ERRORDBDIR)/XtErrorDB\"
+ 
++if STAGING_DIR_SET
++CROSS_SYSROOT = --sysroot=$(STAGING_DIR)
++else
++CROSS_SYSROOT =
++endif
++
+ AM_CFLAGS = $(CWARNFLAGS) $(XT_CFLAGS) $(SRCH_DEFINES) $(ERRORDB_DEFINES) \
+-	$(XTMALLOC_ZERO_CFLAGS) -DLIBXT_COMPILATION
++	$(XTMALLOC_ZERO_CFLAGS) -DLIBXT_COMPILATION $(CROSS_SYSROOT)
+ 
+ AM_CPPFLAGS = -I$(top_srcdir)/include/ -I$(top_srcdir)/include/X11 \
+-	      -I$(top_builddir)/include -I$(top_builddir)/include/X11
++	      -I$(top_builddir)/include -I$(top_builddir)/include/X11 $(CROSS_SYSROOT)
+ 
+ nodist_libXt_la_SOURCES = StringDefs.c
+ 

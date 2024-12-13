@@ -1,0 +1,17 @@
+diff --git a/configure b/configure
+index 5fcde62..d624d57 100755
+--- a/configure
++++ b/configure
+@@ -541,6 +541,12 @@ build=$build_alias
+ host=$host_alias
+ target=$target_alias
+ 
++if [ "x$target" != "x" ] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g')  --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g')  --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g')  --sysroot=$STAGING_DIR"
++fi
++
+ # FIXME: should be removed in autoconf 3.0.
+ if test "x$host_alias" != x; then
+   if test "x$build_alias" = x; then

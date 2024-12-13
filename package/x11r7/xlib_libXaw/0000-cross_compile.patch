@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index c650194..4d017fe 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -115,6 +115,12 @@ if test "x$USE_CONST" = "xyes" ; then
+ 	AC_DEFINE(_CONST_X_STRING, 1, [Define to 1 to use standard C const feature.])
+ fi
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 		include/Makefile
+ 		man/Makefile

@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 27778cd..e4ee82a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -86,6 +86,12 @@ AC_SUBST([moduledir])
+ DRIVER_NAME=fbdev
+ AC_SUBST([DRIVER_NAME])
+ 
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([
+                 Makefile
+                 src/Makefile

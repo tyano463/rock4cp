@@ -1,0 +1,29 @@
+diff --git a/configure.ac b/configure.ac
+index 10ff3fc..5f29a24 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -47,6 +47,12 @@ PKG_CHECK_MODULES(XINERAMA, [x11 >= 1.6] xext xextproto [xineramaproto >= 1.1.99
+ XORG_WITH_LINT
+ LINT_FLAGS="${LINT_FLAGS} ${XINERAMA_CFLAGS}"
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 		src/Makefile
+ 		man/Makefile
+diff --git a/ltmain.sh b/ltmain.sh
+index 2a50d7f..8cdeb99 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -2458,6 +2458,7 @@ func_enable_tag ()
+ # release of libtool.
+ func_check_version_match ()
+ {
++    macro_revision=2.4.7
+     if test "$package_revision" != "$macro_revision"; then
+       if test "$VERSION" != "$macro_version"; then
+         if test -z "$macro_version"; then

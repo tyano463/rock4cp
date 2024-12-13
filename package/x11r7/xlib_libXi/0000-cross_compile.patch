@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index cadc2a4..01c6b1e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -50,6 +50,12 @@ AM_CONDITIONAL([INSTALL_MANPAGES],
+ 	[test -f "$srcdir/man/XAllowDeviceEvents.man" || \
+ 	  test $have_doctools = yes])
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 		src/Makefile
+ 		man/Makefile

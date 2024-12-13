@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 1a03efc..4ba8f33 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -34,6 +34,12 @@ AC_ARG_WITH(cursorpath,
+ 	[XCURSORPATH="$DEF_CURSORPATH"])
+ AC_DEFINE_UNQUOTED([XCURSORPATH], ["$XCURSORPATH"])
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+ 	cursor/Makefile cursor/xcb-cursor.pc
+ 	xcb_util_intro

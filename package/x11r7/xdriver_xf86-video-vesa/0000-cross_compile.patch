@@ -1,0 +1,29 @@
+diff --git a/configure.ac b/configure.ac
+index 28273f0..79d07c5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -89,6 +89,12 @@ fi
+ DRIVER_NAME=vesa
+ AC_SUBST([DRIVER_NAME])
+ 
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([
+                 Makefile
+                 src/Makefile
+diff --git a/src/vesa.h b/src/vesa.h
+index 6332c6c..ff58671 100644
+--- a/src/vesa.h
++++ b/src/vesa.h
+@@ -118,5 +118,7 @@ typedef struct _VESARec
+     ShadowWindowProc window;
+ } VESARec, *VESAPtr;
+ 
++extern _X_EXPORT void outb(unsigned short, unsigned char);
++extern _X_EXPORT unsigned int inb(unsigned short);
+ 
+ #endif /* _VESA_H_ */

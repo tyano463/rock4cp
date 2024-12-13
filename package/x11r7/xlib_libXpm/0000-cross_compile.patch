@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index c2a6665..66bfe9f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -108,6 +108,12 @@ if test "x$have_glib" = x"yes"; then
+ fi
+ XORG_MEMORY_CHECK_FLAGS
+ 
++if [[ "x${STAGING_DIR}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([Makefile
+                  doc/Makefile
+                  include/Makefile

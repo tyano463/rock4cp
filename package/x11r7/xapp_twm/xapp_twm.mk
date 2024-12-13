@@ -11,5 +11,7 @@ XAPP_TWM_LICENSE = MIT
 XAPP_TWM_LICENSE_FILES = COPYING
 XAPP_TWM_DEPENDENCIES = \
 	host-bison xlib_libX11 xlib_libXext xlib_libXt xlib_libXmu
+XAPP_TWM_AUTORECONF = YES
+XAPP_TWM_AUTORECONF_OPTS = --force
 
 $(eval $(autotools-package))
