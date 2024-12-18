@@ -24,6 +24,8 @@ VIM_CONF_OPTS = --with-tlib=ncurses --enable-gui=no --without-x
 VIM_LICENSE = Charityware
 VIM_LICENSE_FILES = LICENSE README.txt
 VIM_CPE_ID_VENDOR = vim
+VIM_AUTORECONF = yes
+VIM_AUTORECONF_FLAGS = --force
 
 ifeq ($(BR2_PACKAGE_ACL),y)
 VIM_CONF_OPTS += --enable-acl

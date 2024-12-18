@@ -1,0 +1,18 @@
+diff --git a/configure.in b/configure.in
+index b302495..b93b382 100644
+--- a/configure.in
++++ b/configure.in
+@@ -126,6 +126,13 @@ CFLAGS="$CFLAGS $SDL_CFLAGS"
+ SDL_LIBS=$(echo "$SDL_LIBS" | sed -e 's/-lmingw32//' -e 's/-lSDLmain//')
+ LIBS="$LIBS $SDL_LIBS"
+ 
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    AC_SUBST([TARGET_OR_HOST], "$target")
++fi
++
+ # Finally create all the generated files
+ AC_OUTPUT([
+ Makefile

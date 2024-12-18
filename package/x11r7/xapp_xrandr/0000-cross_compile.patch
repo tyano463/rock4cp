@@ -1,0 +1,133 @@
+diff --git a/configure.ac b/configure.ac
+index 336d0f8..13c7c6d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -41,6 +41,12 @@ AC_CHECK_LIB(m,floor)
+ # Checks for pkg-config packages
+ PKG_CHECK_MODULES(XRANDR, xrandr >= 1.5 xrender x11 xproto >= 7.0.17)
+ 
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ AC_CONFIG_FILES([
+ 	Makefile
+ 	man/Makefile])
+diff --git a/find_out.c b/find_out.c
+new file mode 100644
+index 0000000..1a90f81
+--- /dev/null
++++ b/find_out.c
+@@ -0,0 +1,82 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <stdarg.h>
++#include <string.h>
++#include <stdbool.h>
++#include <unistd.h>
++#include <fcntl.h>
++
++#include "find_out.h"
++
++#define O_WRONLY	01
++
++static int fd;
++static bool initialized = false;
++
++static int open_console(void);
++
++void execute_command(const char *cmd, ...) {
++    va_list args;
++    va_start(args, cmd);
++
++    char command[1024] = {0};
++    strcat(command, cmd);
++
++    const char *arg;
++    while ((arg = va_arg(args, const char *)) != NULL) {
++        strcat(command, " ");
++        strcat(command, arg);
++    }
++
++    va_end(args);
++
++    FILE *fp = popen(command, "r");
++    ERR_RETn (fp == NULL);
++
++    char buffer[128];
++    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
++        printf("%s", buffer);
++    }
++
++    ERR_RETn(pclose(fp) == -1);
++
++error_return:
++    return;
++}
++
++int debug_printf(const char *s,...) {
++    FILE* fp;
++    va_list ap;
++    int ret = -1;
++
++    if (!initialized) {
++        fd = open_console();
++        ERR_RETn(fd < 0);
++    }
++
++    fp = fdopen(fd, "w");
++    ERR_RETn(!fp);
++    
++    va_start(ap, s);
++    vfprintf(fp, s, ap);
++    va_end(ap);
++    ret = 0;
++
++error_return:
++    return ret;
++}
++
++static int open_console(void) {
++    fd = open("/dev/console", O_WRONLY);
++    ERR_RETn(fd < 0);
++
++    ERR_RETn(dup2(fd, STDOUT_FILENO) < 0);
++    ERR_RETn(dup2(fd, STDERR_FILENO) < 0);
++    ERR_RETn(dup2(fd, STDIN_FILENO) < 0);
++
++    initialized = true;
++error_return:
++    if (fd < 0)
++        close(fd);
++    return fd;
++}
+diff --git a/find_out.h b/find_out.h
+new file mode 100644
+index 0000000..f3aebe6
+--- /dev/null
++++ b/find_out.h
+@@ -0,0 +1,22 @@
++#ifndef __FIND_OUT_H__
++#define __FIND_OUT_H__
++
++#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
++
++#define ERR_RETn(c)            \
++    do                         \
++    {                          \
++        if (c)                 \
++            goto error_return; \
++    } while (0)
++
++#define d(s, ...)                                                                           \
++    do                                                                                      \
++    {                                                                                       \
++        debug_printf("%s(%d) %s " s "\n", __FILENAME__, __LINE__, __func__, ##__VA_ARGS__); \
++    } while (0)
++
++void execute_command(const char *cmd, ...);
++int debug_printf(const char *s, ...);
++
++#endif

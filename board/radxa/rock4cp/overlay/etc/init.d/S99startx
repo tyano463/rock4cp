@@ -5,6 +5,7 @@ export DISPLAY=:0.0
 case "$ARGV" in
     start)
         xterm -geometry 100x24+100+100 &
+        #xclock -geometry 100x100+200+100 &
         ;;
     stop)
         killall X

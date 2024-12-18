@@ -1,0 +1,16 @@
+diff --git a/Makefile b/Makefile
+index f8a8dfaa9..d88c8867f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -24,6 +24,11 @@ include Makethird
+ CFLAGS += $(XCFLAGS) -Iinclude
+ LIBS += $(XLIBS) -lm
+ 
++ifeq ($(TARGET_OR_HOST),target)
++    CFLAGS += --sysroot=$(STAGING_DIR)
++	LDFLAGS += --sysroot=$(STAGING_DIR)
++endif
++
+ ifneq ($(threading),no)
+   ifeq ($(HAVE_PTHREAD),yes)
+ 	THREADING_CFLAGS := $(PTHREAD_CFLAGS) -DHAVE_PTHREAD

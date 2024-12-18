@@ -1,0 +1,42 @@
+diff --git a/build-scripts/ltmain.sh b/build-scripts/ltmain.sh
+index 5e04f08..aa6b28d 100644
+--- a/build-scripts/ltmain.sh
++++ b/build-scripts/ltmain.sh
+@@ -4716,7 +4716,9 @@ func_mode_link ()
+ 	func_stripname ' ' '' "$arg"
+ 	arg=$func_stripname_result
+ 	;;
+-
++    --sysroot=*)
++    sysroot=$arg
++    ;;
+       -Wl,*)
+ 	func_stripname '-Wl,' '' "$arg"
+ 	args=$func_stripname_result
+@@ -7338,6 +7340,7 @@ EOF
+ 	    func_quote_for_expand "$cmd"
+ 	    eval "func_echo $func_quote_for_expand_result"
+ 	  }
++        cmd="$cmd $sysroot"
+ 	  $opt_dry_run || eval "$cmd" || {
+ 	    lt_exit=$?
+ 
+diff --git a/configure.in b/configure.in
+index f740e0c..dcb39af 100644
+--- a/configure.in
++++ b/configure.in
+@@ -82,6 +82,14 @@ case "$host" in
+         BASE_LDFLAGS=""
+         ;;
+ esac
++
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    AC_SUBST([TARGET_OR_HOST], "$target")
++fi
++
+ BUILD_CFLAGS="$CFLAGS $CPPFLAGS"
+ EXTRA_CFLAGS="$INCLUDE $BASE_CFLAGS"
+ BUILD_LDFLAGS="$LDFLAGS"

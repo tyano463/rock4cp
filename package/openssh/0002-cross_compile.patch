@@ -1,0 +1,17 @@
+diff --git a/configure b/configure
+index f68e94a..043f337 100755
+--- a/configure
++++ b/configure
+@@ -3012,6 +3012,12 @@ fi
+ ## Main body of script. ##
+ ## -------------------- ##
+ 
++if [ "x${target}" != "x" ] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CXXFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $LDFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ ac_ext=c
+ ac_cpp='$CPP $CPPFLAGS'
+ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'

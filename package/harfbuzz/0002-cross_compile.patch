@@ -1,0 +1,18 @@
+diff --git a/meson.build b/meson.build
+index c5809ee..9ab55e2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -31,6 +31,13 @@ pkgmod = import('pkgconfig')
+ cpp = meson.get_compiler('cpp')
+ null_dep = dependency('', required: false)
+ 
++sys_root = meson.get_cross_property('sys_root', '')
++
++if sys_root != ''
++    add_project_arguments('--sysroot=' + sys_root, language: 'cpp')
++    add_project_arguments('--sysroot=' + sys_root, language: 'c')
++endif
++
+ # Only perform these checks if cpp_std is c++11 as setting -std directly
+ # produces a warning from meson.
+ if get_option('cpp_std') == 'c++11'

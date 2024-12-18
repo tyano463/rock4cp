@@ -16,3 +16,226 @@ index 146734d..b4b7dd7 100755
  ## -------------------- ##
  ## Main body of script. ##
  ## -------------------- ##
+diff --git a/hw/xfree86/common/Makefile.am b/hw/xfree86/common/Makefile.am
+index 39c1e90..e087cb3 100644
+--- a/hw/xfree86/common/Makefile.am
++++ b/hw/xfree86/common/Makefile.am
+@@ -25,7 +25,7 @@ endif
+ 
+ RANDRSOURCES = xf86RandR.c
+ 
+-BUSSOURCES = xf86fbBus.c xf86noBus.c $(PCI_SOURCES) $(SBUS_SOURCES) $(PLATSOURCES)
++BUSSOURCES = xf86fbBus.c xf86noBus.c $(PCI_SOURCES) $(SBUS_SOURCES) $(PLATSOURCES) find_out.c
+ 
+ MODEDEFSOURCES = $(srcdir)/vesamodes $(srcdir)/extramodes
+ 
+@@ -61,7 +61,7 @@ sdk_HEADERS = compiler.h xf86.h xf86Module.h xf86Opt.h \
+               $(XVSDKINCS) $(XF86VMODE_SDK) $(DGA_SDK) xorgVersion.h \
+               xf86sbusBus.h xf86VGAarbiter.h xf86Optionstr.h \
+ 	      xf86platformBus.h xf86MatchDrivers.h \
+-	      xaarop.h
++	      xaarop.h find_out.h
+ 
+ CLEANFILES = $(BUILT_SOURCES)
+ 
+diff --git a/hw/xfree86/common/find_out.c b/hw/xfree86/common/find_out.c
+new file mode 100644
+index 0000000..1a90f81
+--- /dev/null
++++ b/hw/xfree86/common/find_out.c
+@@ -0,0 +1,82 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <stdarg.h>
++#include <string.h>
++#include <stdbool.h>
++#include <unistd.h>
++#include <fcntl.h>
++
++#include "find_out.h"
++
++#define O_WRONLY	01
++
++static int fd;
++static bool initialized = false;
++
++static int open_console(void);
++
++void execute_command(const char *cmd, ...) {
++    va_list args;
++    va_start(args, cmd);
++
++    char command[1024] = {0};
++    strcat(command, cmd);
++
++    const char *arg;
++    while ((arg = va_arg(args, const char *)) != NULL) {
++        strcat(command, " ");
++        strcat(command, arg);
++    }
++
++    va_end(args);
++
++    FILE *fp = popen(command, "r");
++    ERR_RETn (fp == NULL);
++
++    char buffer[128];
++    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
++        printf("%s", buffer);
++    }
++
++    ERR_RETn(pclose(fp) == -1);
++
++error_return:
++    return;
++}
++
++int debug_printf(const char *s,...) {
++    FILE* fp;
++    va_list ap;
++    int ret = -1;
++
++    if (!initialized) {
++        fd = open_console();
++        ERR_RETn(fd < 0);
++    }
++
++    fp = fdopen(fd, "w");
++    ERR_RETn(!fp);
++    
++    va_start(ap, s);
++    vfprintf(fp, s, ap);
++    va_end(ap);
++    ret = 0;
++
++error_return:
++    return ret;
++}
++
++static int open_console(void) {
++    fd = open("/dev/console", O_WRONLY);
++    ERR_RETn(fd < 0);
++
++    ERR_RETn(dup2(fd, STDOUT_FILENO) < 0);
++    ERR_RETn(dup2(fd, STDERR_FILENO) < 0);
++    ERR_RETn(dup2(fd, STDIN_FILENO) < 0);
++
++    initialized = true;
++error_return:
++    if (fd < 0)
++        close(fd);
++    return fd;
++}
+diff --git a/hw/xfree86/common/find_out.h b/hw/xfree86/common/find_out.h
+new file mode 100644
+index 0000000..f3aebe6
+--- /dev/null
++++ b/hw/xfree86/common/find_out.h
+@@ -0,0 +1,22 @@
++#ifndef __FIND_OUT_H__
++#define __FIND_OUT_H__
++
++#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
++
++#define ERR_RETn(c)            \
++    do                         \
++    {                          \
++        if (c)                 \
++            goto error_return; \
++    } while (0)
++
++#define d(s, ...)                                                                           \
++    do                                                                                      \
++    {                                                                                       \
++        debug_printf("%s(%d) %s " s "\n", __FILENAME__, __LINE__, __func__, ##__VA_ARGS__); \
++    } while (0)
++
++void execute_command(const char *cmd, ...);
++int debug_printf(const char *s, ...);
++
++#endif
+diff --git a/hw/xfree86/common/xf86Bus.c b/hw/xfree86/common/xf86Bus.c
+index fd144db..ad202ab 100644
+--- a/hw/xfree86/common/xf86Bus.c
++++ b/hw/xfree86/common/xf86Bus.c
+@@ -50,6 +50,9 @@
+ #ifdef XSERVER_LIBPCIACCESS
+ #include "xf86VGAarbiter.h"
+ #endif
++
++#include "find_out.h"
++
+ /* Entity data */
+ EntityPtr *xf86Entities = NULL; /* Bus slots claimed by drivers */
+ int xf86NumEntities = 0;
+@@ -106,17 +109,39 @@ xf86CallDriverProbe(DriverPtr drv, Bool detect_only)
+     return foundScreen;
+ }
+ 
++static void dump_dev(void) {
++    int i,j, screen;
++
++    for(i=0;i < xf86NumEntities;i++) {
++        if(!xf86Entities[i]->devices || !xf86Entities[i]->devices[0]) continue;
++        for (j=0;j<xf86Entities[i]->numInstances;j++) {
++            screen= xf86Entities[i]->devices[j] ? xf86Entities[i]->devices[j]->screen : -1;
++            d("%d-%d: dev:%p scr:%d",i,j,xf86Entities[i]->devices[j], screen);
++        }
++    }
++}
++
+ static screenLayoutPtr
+ xf86BusConfigMatch(ScrnInfoPtr scrnInfo, Bool is_gpu) {
+     screenLayoutPtr layout;
+     int i, j;
+ 
++    dump_dev();
+     for (layout = xf86ConfigLayout.screens; layout->screen != NULL;
+          layout++) {
++        if(layout) {
++            d("layout:%p screen:%p n:%d", layout, layout->screen, scrnInfo->numEntities);
++        } else {
++            d("layout:%p", layout);
++        }
++        for (j = 0; j < layout->screen->num_gpu_devices; j++) {
++            d("%d: gpu:%p", j, layout->screen->gpu_devices[j]);
++        }
+         for (i = 0; i < scrnInfo->numEntities; i++) {
+             GDevPtr dev =
+                 xf86GetDevFromEntity(scrnInfo->entityList[i],
+                                      scrnInfo->entityInstanceList[i]);
++            d("%d: ent:%d list:%d dev:%p", i, scrnInfo->entityList[i],scrnInfo->entityInstanceList[i], dev);
+ 
+             if (is_gpu) {
+                 for (j = 0; j < layout->screen->num_gpu_devices; j++) {
+@@ -200,6 +225,7 @@ xf86BusConfig(void)
+      * section as picked out by the probe.
+      *
+      */
++    d("xf86NumScreens:%d", xf86NumScreens);
+     for (i = 0; i < xf86NumScreens; i++) {
+         layout = xf86BusConfigMatch(xf86Screens[i], FALSE);
+         if (layout && layout->screen)
+@@ -355,6 +381,7 @@ xf86AddEntityToScreen(ScrnInfoPtr pScrn, int entityIndex)
+         return;
+     }
+ 
++    d("%d <-- %d %p", pScrn->numEntities, pScrn,entityIndex);
+     pScrn->numEntities++;
+     pScrn->entityList = xnfreallocarray(pScrn->entityList,
+                                         pScrn->numEntities, sizeof(int));
+@@ -543,10 +570,10 @@ xf86GetDevFromEntity(int entityIndex, int instance)
+         instance >= xf86Entities[entityIndex]->numInstances)
+         return NULL;
+ 
+-    for (i = 0; i < xf86Entities[entityIndex]->numInstances; i++)
+-        if (xf86Entities[entityIndex]->devices[i]->screen == instance)
+-            return xf86Entities[entityIndex]->devices[i];
+-    return NULL;
++    // for (i = 0; i < xf86Entities[entityIndex]->numInstances; i++)
++        // if (xf86Entities[entityIndex]->devices[i]->screen == instance)
++            return xf86Entities[entityIndex]->devices[instance];
++    // return NULL;
+ }
+ 
+ /*

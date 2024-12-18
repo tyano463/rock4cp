@@ -1,0 +1,35 @@
+diff --git a/src/auto/configure b/src/auto/configure
+index 5c14648..44bc4c4 100755
+--- a/src/auto/configure
++++ b/src/auto/configure
+@@ -2918,6 +2918,12 @@ fi
+ ## Main body of script. ##
+ ## -------------------- ##
+ 
++if [ "x${target}" != "x" ] ; then
++    CFLAGS="$CFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS $(echo $CFLAGS_FOR_BUILD | sed -e 's/\/host\//\/target\/usr\//g') --sysroot=$STAGING_DIR"
++fi
++
+ ac_ext=c
+ ac_cpp='$CPP $CPPFLAGS'
+ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+diff --git a/src/osdef2.h.in b/src/osdef2.h.in
+index f29451d..d80b17e 100644
+--- a/src/osdef2.h.in
++++ b/src/osdef2.h.in
+@@ -57,11 +57,13 @@ extern int	link(const char *, const char *);
+ extern int	mkdir(const char *, mode_t);
+ extern int	rmdir(const char *);
+ 
++#if 0
+ extern int	tgetent(char *, char *);
+ extern int	tgetnum(char *);
+ extern int	tgetflag(char *);
+ extern char	*tgoto(char *, int, int);
+ extern int	tputs(char *, int, int (*)(int));
++#endif
+ 
+ #ifdef HAVE_TERMIOS_H
+ struct termios;		/* for tcgetattr() */
