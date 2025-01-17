@@ -259,4 +259,8 @@ else
 MESA3D_CONF_OPTS += -Dglvnd=false
 endif
 
+define MESA3D_POST_INSTALL_FIXUP
+	cp -r $(BUILD_DIR)/include/* $(TARGET_DIR)/usr/include/
+endef
+
 $(eval $(meson-package))

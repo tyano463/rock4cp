@@ -1,0 +1,47 @@
+diff --git a/meson.build b/meson.build
+index bf78d32..b3eddd2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -54,6 +54,8 @@ common_cflags = []
+ common_cppflags = []
+ common_ldflags = []
+ 
++sys_root = meson.get_external_property('sys_root', '')
++
+ # Add more compiler warnings to the default set
+ if cc.get_id() == 'msvc'
+   # Compiler options taken from msvc_recommended_pragmas.h
+@@ -445,8 +447,14 @@ int main() {
+   cairo_ft_font_face_create_for_pattern (p);
+   return 0;
+ }'''
++            if sys_root.strip() != ''
++              cross_sysroot = '--sysroot=' + sys_root
++            else
++              cross_sysroot =
++            endif
+             if not cc.links(cairo_fc_test,
+                             dependencies: dep,
++                            args: cross_sysroot,
+                             name : 'Cairo is built with FreeType and FontConfig support')
+               error('@0@ does not have the required FontConfig support'.format(b[0]))
+             endif
+diff --git a/pango/meson.build b/pango/meson.build
+index 82242ab..cafa33e 100644
+--- a/pango/meson.build
++++ b/pango/meson.build
+@@ -114,6 +114,14 @@ pango_cflags = [
+ 
+ pango_inc = include_directories('.')
+ 
++temp_cflags = []
++foreach flag : common_cflags
++  if flag != '-Werror=redundant-decls'
++    temp_cflags += flag
++  endif
++endforeach
++common_cflags = temp_cflags
++
+ libpango = library(
+   pango_api_name,
+   sources: pango_sources + pango_enums,

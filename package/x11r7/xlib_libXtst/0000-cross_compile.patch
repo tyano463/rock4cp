@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 57a9462..8b426a5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -27,6 +27,12 @@ AC_INIT([libXtst], [1.2.4],
+ AC_CONFIG_SRCDIR([Makefile.am])
+ AC_CONFIG_HEADERS([config.h])
+ 
++if [[ "x$target" != "x" ]] ; then
++    CFLAGS="$CFLAGS --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS --sysroot=$STAGING_DIR"
++fi
++
+ # Initialize Automake
+ AM_INIT_AUTOMAKE([foreign dist-xz])
+ 

@@ -1,0 +1,13 @@
+diff --git a/meson.build b/meson.build
+index e1d8d8b..17a2067 100644
+--- a/meson.build
++++ b/meson.build
+@@ -154,6 +154,8 @@ if libtype == 'shared'
+   endif
+ endif
+ 
++sys_root = meson.get_external_property('sys_root', '')
++
+ # The inline keyword is available only for C++ in MSVC.
+ # So we need to use Microsoft specific __inline.
+ if host_system == 'windows'

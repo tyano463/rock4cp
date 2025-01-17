@@ -1,0 +1,43 @@
+diff --git a/src/Makefile b/src/Makefile
+index c2b9200..7905c54 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -51,7 +51,7 @@ $(LIBBPF_INTERNAL_HDRS): $(LIBBPF_HDRS_DIR)/%.h: $(BPF_DIR)/%.h | $(LIBBPF_HDRS_
+ $(LIBBPF_BOOTSTRAP): $(wildcard $(BPF_DIR)/*.[ch] $(BPF_DIR)/Makefile) | $(LIBBPF_BOOTSTRAP_OUTPUT)
+ 	$(Q)$(MAKE) -C $(BPF_DIR) OBJDIR=$(patsubst %/,%,$(LIBBPF_BOOTSTRAP_OUTPUT)) \
+ 		PREFIX=$(LIBBPF_BOOTSTRAP_DESTDIR:/=) \
+-		ARCH= CROSS_COMPILE= CC=$(HOSTCC) LD=$(HOSTLD) AR=$(HOSTAR) $@ install_headers
++		ARCH= CROSS_COMPILE= CC=$(HOSTCC) LD=$(HOSTLD) AR=$(HOSTAR) TARGET_OR_HOST=host $@ install_headers
+ 
+ $(LIBBPF_BOOTSTRAP_INTERNAL_HDRS): $(LIBBPF_BOOTSTRAP_HDRS_DIR)/%.h: $(BPF_DIR)/%.h | $(LIBBPF_BOOTSTRAP_HDRS_DIR)
+ 	$(call QUIET_INSTALL, $@)
+@@ -68,6 +68,12 @@ $(LIBBPF_BOOTSTRAP)-clean: FORCE | $(LIBBPF_BOOTSTRAP_OUTPUT)
+ prefix ?= /usr/local
+ bash_compdir ?= /usr/share/bash-completion/completions
+ 
++ifeq ($(TARGET_OR_HOST),target)
++ifdef STAGING_DIR
++	CFLAGS += --sysroot=$(STAGING_DIR)
++	LDFLAGS += --sysroot=$(STAGING_DIR)
++endif
++endif
+ CFLAGS += -O2
+ CFLAGS += -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
+ CFLAGS += $(filter-out -Wswitch-enum -Wnested-externs,$(EXTRA_WARNINGS))
+@@ -170,6 +176,7 @@ endif
+ 
+ HOST_CFLAGS = $(subst -I$(LIBBPF_INCLUDE),-I$(LIBBPF_BOOTSTRAP_INCLUDE),\
+ 		$(subst $(CLANG_CROSS_FLAGS),,$(CFLAGS)))
++HOST_CFLAGS := $(filter-out --sysroot=%, $(HOST_CFLAGS))
+ 
+ BPFTOOL_BOOTSTRAP := $(BOOTSTRAP_OUTPUT)bpftool
+ 
+@@ -227,7 +234,7 @@ $(OUTPUT)disasm.o: $(srctree)/src/kernel/bpf/disasm.c
+ 	$(QUIET_CC)$(CC) $(CFLAGS) -c -MMD $< -o $@
+ 
+ $(BPFTOOL_BOOTSTRAP): $(BOOTSTRAP_OBJS) $(LIBBPF_BOOTSTRAP)
+-	$(QUIET_LINK)$(HOSTCC) $(HOST_CFLAGS) $(LDFLAGS) $(BOOTSTRAP_OBJS) $(LIBS_BOOTSTRAP) -o $@
++	$(QUIET_LINK)$(HOSTCC) $(HOST_CFLAGS) $(filter-out --sysroot=%,$(LDFLAGS)) $(BOOTSTRAP_OBJS) $(LIBS_BOOTSTRAP) -o $@
+ 
+ $(OUTPUT)bpftool: $(OBJS) $(LIBBPF)
+ 	$(QUIET_LINK)$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(LIBS) -o $@

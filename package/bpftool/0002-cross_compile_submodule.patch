@@ -1,0 +1,36 @@
+diff --git a/libbpf/src/Makefile b/libbpf/src/Makefile
+index d535f81..555af51 100644
+--- a/libbpf/src/Makefile
++++ b/libbpf/src/Makefile
+@@ -35,6 +35,11 @@ ALL_CFLAGS := $(INCLUDES)
+ SHARED_CFLAGS += -fPIC -fvisibility=hidden -DSHARED
+ 
+ CFLAGS ?= -g -O2 -Werror -Wall -std=gnu89
++ifeq ($(TARGET_OR_HOST),host)
++	CFLAGS := $(filter-out --sysroot=%, $(CFLAGS))
++	CXXFLAGS := $(filter-out --sysroot=%, $(CXXFLAGS))
++	LDFLAGS := $(filter-out --sysroot=%, $(LDFLAGS))
++endif
+ ALL_CFLAGS += $(CFLAGS) -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 $(EXTRA_CFLAGS)
+ ALL_LDFLAGS += $(LDFLAGS) $(EXTRA_LDFLAGS)
+ 
+diff --git a/libbpf/src/usdt.c b/libbpf/src/usdt.c
+index 75b411f..3f64458 100644
+--- a/libbpf/src/usdt.c
++++ b/libbpf/src/usdt.c
+@@ -1185,6 +1185,7 @@ static int calc_pt_regs_off(const char *reg_name)
+ #else
+ #define reg_off(reg64, reg32) offsetof(struct pt_regs, reg32)
+ #endif
++#ifdef __x86_64__
+ 		{ {"rip", "eip", "", ""}, reg_off(rip, eip) },
+ 		{ {"rax", "eax", "ax", "al"}, reg_off(rax, eax) },
+ 		{ {"rbx", "ebx", "bx", "bl"}, reg_off(rbx, ebx) },
+@@ -1194,6 +1195,7 @@ static int calc_pt_regs_off(const char *reg_name)
+ 		{ {"rdi", "edi", "di", "dil"}, reg_off(rdi, edi) },
+ 		{ {"rbp", "ebp", "bp", "bpl"}, reg_off(rbp, ebp) },
+ 		{ {"rsp", "esp", "sp", "spl"}, reg_off(rsp, esp) },
++#endif
+ #undef reg_off
+ #ifdef __x86_64__
+ 		{ {"r8", "r8d", "r8w", "r8b"}, offsetof(struct pt_regs, r8) },

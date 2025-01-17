@@ -14,6 +14,7 @@ LIBXML2_LICENSE = MIT
 LIBXML2_LICENSE_FILES = Copyright
 LIBXML2_CPE_ID_VENDOR = xmlsoft
 LIBXML2_CONFIG_SCRIPTS = xml2-config
+LIBXML2_LIBTOOL_PATCH = NO
 
 # relocation truncated to fit: R_68K_GOT16O
 ifeq ($(BR2_m68k_cf),y)

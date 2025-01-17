@@ -1,0 +1,121 @@
+diff --git a/gdk/x11/gdkdisplay-x11.c b/gdk/x11/gdkdisplay-x11.c
+index 7e08f47..95808bf 100644
+--- a/gdk/x11/gdkdisplay-x11.c
++++ b/gdk/x11/gdkdisplay-x11.c
+@@ -1389,8 +1389,10 @@ _gdk_wm_protocols_filter (GdkXEvent *xev,
+                                             frame_drawn_time,
+                                             &refresh_interval,
+                                             &presentation_time);
++#ifdef HAVE_XSYNC
+           if (presentation_time != 0)
+             window_impl->toplevel->throttled_presentation_time = presentation_time + refresh_interval;
++#endif
+         }
+ 
+       return GDK_FILTER_REMOVE;
+diff --git a/gdk/x11/gdkwindow-x11.c b/gdk/x11/gdkwindow-x11.c
+index 89f0666..01957af 100644
+--- a/gdk/x11/gdkwindow-x11.c
++++ b/gdk/x11/gdkwindow-x11.c
+@@ -55,6 +55,7 @@
+ #include <X11/Xatom.h>
+ 
+ #include <X11/extensions/shape.h>
++#include <X11/extensions/sync.h>
+ 
+ #ifdef HAVE_XKB
+ #include <X11/XKBlib.h>
+@@ -236,6 +237,7 @@ window_pre_damage (GdkWindow *window)
+ 
+   impl = GDK_WINDOW_IMPL_X11 (toplevel_window->impl);
+ 
++#ifdef HAVE_XSYNC
+   if (impl->toplevel->in_frame &&
+       impl->toplevel->current_counter_value % 2 == 0)
+     {
+@@ -244,6 +246,7 @@ window_pre_damage (GdkWindow *window)
+ 		        impl->toplevel->extended_update_counter,
+                         impl->toplevel->current_counter_value);
+     }
++#endif
+ }
+ 
+ static void
+@@ -347,8 +350,10 @@ gdk_x11_window_predict_presentation_time (GdkWindow *window)
+         presentation_time = timings->frame_time + refresh_interval;
+     }
+ 
++#ifdef HAVE_XSYNC
+   if (presentation_time < impl->toplevel->throttled_presentation_time)
+     presentation_time = impl->toplevel->throttled_presentation_time;
++#endif
+ 
+   timings->predicted_presentation_time = presentation_time;
+ }
+@@ -363,12 +368,15 @@ gdk_x11_window_begin_frame (GdkWindow *window,
+ 
+   impl = GDK_WINDOW_IMPL_X11 (window->impl);
+ 
++#ifdef HAVE_XSYNC
+   if (!WINDOW_IS_TOPLEVEL (window) ||
+       impl->toplevel->extended_update_counter == None)
+     return;
++#endif
+ 
+   impl->toplevel->in_frame = TRUE;
+ 
++#ifdef HAVE_XSYNC
+   if (impl->toplevel->configure_counter_value != 0 &&
+       impl->toplevel->configure_counter_value_is_extended)
+     {
+@@ -380,7 +388,9 @@ gdk_x11_window_begin_frame (GdkWindow *window,
+ 
+       window_pre_damage (window);
+     }
+-  else if (force_frame)
++  else
++#endif
++  if (force_frame)
+     {
+       /* When mapping the window, we really want to freeze the
+          rendering of the window by the compositor until we've
+@@ -405,8 +415,11 @@ gdk_x11_window_end_frame (GdkWindow *window)
+   impl = GDK_WINDOW_IMPL_X11 (window->impl);
+ 
+   if (!WINDOW_IS_TOPLEVEL (window) ||
++#ifdef HAVE_XSYNC
+       impl->toplevel->extended_update_counter == None ||
++#endif
+       !impl->toplevel->in_frame)
++
+     return;
+ 
+   clock = gdk_window_get_frame_clock (window);
+@@ -414,6 +427,7 @@ gdk_x11_window_end_frame (GdkWindow *window)
+ 
+   impl->toplevel->in_frame = FALSE;
+ 
++#ifdef HAVE_XSYNC
+   if (impl->toplevel->current_counter_value % 2 == 1)
+     {
+ #ifdef G_ENABLE_DEBUG
+@@ -450,9 +464,11 @@ gdk_x11_window_end_frame (GdkWindow *window)
+           timings->cookie = impl->toplevel->current_counter_value;
+         }
+     }
++#endif
+ 
+   unhook_surface_changed (window);
+ 
++#ifdef HAVE_XSYNC
+   if (impl->toplevel->configure_counter_value != 0 &&
+       !impl->toplevel->configure_counter_value_is_extended)
+     {
+@@ -462,6 +478,7 @@ gdk_x11_window_end_frame (GdkWindow *window)
+ 
+       impl->toplevel->configure_counter_value = 0;
+     }
++#endif
+ 
+   if (!impl->toplevel->frame_pending)
+     timings->complete = TRUE;

@@ -47,7 +47,7 @@ XORGPROTO_LICENSE_FILES = \
 	COPYING-xineramaproto \
 	COPYING-xwaylandproto
 XORGPROTO_INSTALL_STAGING = YES
-XORGPROTO_INSTALL_TARGET = NO
+XORGPROTO_INSTALL_TARGET = YES
 # xproxymngproto is needed by xfindproxy
 XORGPROTO_CONF_OPTS += --enable-legacy
 

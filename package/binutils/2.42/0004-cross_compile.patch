@@ -1,0 +1,39 @@
+diff --git a/configure b/configure
+index 967c6708..7cddd2e8 100755
+--- a/configure
++++ b/configure
+@@ -2322,6 +2322,12 @@ fi
+ ## Main body of script. ##
+ ## -------------------- ##
+ 
++if [ "x${target}" != "x" ] ; then
++    CFLAGS="$CFLAGS --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS --sysroot=$STAGING_DIR"
++fi
++
+ ac_ext=c
+ ac_cpp='$CPP $CPPFLAGS'
+ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+diff --git a/ltmain.sh b/ltmain.sh
+index 70990740..591292a9 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -4307,6 +4307,9 @@ func_mode_link ()
+     for arg
+     do
+       case $arg in
++    --sysroot=*)
++        sysroot=$arg
++        ;;
+       -shared)
+ 	test "$build_libtool_libs" != yes && \
+ 	  func_fatal_configuration "can not build a shared library"
+@@ -7560,6 +7563,7 @@ EOF
+ 	    func_quote_for_expand "$cmd"
+ 	    eval "func_echo $func_quote_for_expand_result"
+ 	  }
++      cmd="$cmd $sysroot"
+ 	  $opt_dry_run || eval "$cmd" || {
+ 	    lt_exit=$?
+ 

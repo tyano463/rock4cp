@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 235146f..fe55316 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -98,6 +98,12 @@ m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
+ AC_CHECK_TOOL([READELF], [readelf])
+ AC_CHECK_TOOL([NM], [nm])
+ 
++if [[ "x${target}" != "x" ]] ; then
++    CFLAGS="$CFLAGS --sysroot=$STAGING_DIR"
++    CXXFLAGS="$CXXFLAGS --sysroot=$STAGING_DIR"
++    LDFLAGS="$LDFLAGS --sysroot=$STAGING_DIR"
++fi
++
+ AC_CACHE_CHECK([whether gcc supports __attribute__((visibility()))],
+ 	ac_cv_visibility, [dnl
+ save_CFLAGS="$CFLAGS"

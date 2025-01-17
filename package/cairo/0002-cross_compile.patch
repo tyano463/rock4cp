@@ -1,0 +1,38 @@
+diff --git a/meson.build b/meson.build
+index 4051a7c..e26d507 100644
+--- a/meson.build
++++ b/meson.build
+@@ -43,7 +43,6 @@ cflags = []
+ if cc.get_id() != 'msvc'
+   cflags += [
+     '-Wmissing-declarations',
+-    '-Werror-implicit-function-declaration',
+     '-Wpointer-arith',
+     '-Wwrite-strings',
+     '-Wsign-compare',
+diff --git a/src/cairo-ps-surface.c b/src/cairo-ps-surface.c
+index 5421c39..fe730cc 100644
+--- a/src/cairo-ps-surface.c
++++ b/src/cairo-ps-surface.c
+@@ -102,6 +102,7 @@
+ #define DEBUG_FALLBACK(s)
+ #endif
+ 
++#define HAVE_CTIME_R 1
+ #ifndef HAVE_CTIME_R
+ static char *ctime_r(const time_t *timep, char *buf)
+ {
+diff --git a/src/cairo-xlib-xrender-private.h b/src/cairo-xlib-xrender-private.h
+index 9076946..898b262 100644
+--- a/src/cairo-xlib-xrender-private.h
++++ b/src/cairo-xlib-xrender-private.h
+@@ -100,6 +100,9 @@ __attribute__((__unused__)) static void   _void_consume_free   (Display *p, XID
+ #define XRenderCreateSolidFill				_int_consume
+ #endif
+ 
++#define HAVE_XRENDERCREATELINEARGRADIENT 1
++#define HAVE_XRENDERCREATERADIALGRADIENT 1
++#define HAVE_XRENDERCREATECONICALGRADIENT 1
+ #if !HAVE_XRENDERCREATELINEARGRADIENT
+ #define XRenderCreateLinearGradient			_int_consume
+ 

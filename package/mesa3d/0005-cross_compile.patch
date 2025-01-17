@@ -1,0 +1,12 @@
+diff --git a/meson.build b/meson.build
+index 8963b31..89ee884 100644
+--- a/meson.build
++++ b/meson.build
+@@ -841,6 +841,7 @@ if with_gallium_opencl or with_clc
+   dep_clc = dependency('libclc')
+ endif
+ 
++sys_root = meson.get_external_property('sys_root', '')
+ gl_pkgconfig_c_flags = []
+ with_glx_indirect_rendering = false
+ if with_platform_x11

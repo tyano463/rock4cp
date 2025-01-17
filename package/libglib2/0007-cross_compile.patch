@@ -1,0 +1,1267 @@
+diff --git a/gio/gapplicationcommandline.c b/gio/gapplicationcommandline.c
+index e9a6f46..baa379f 100644
+--- a/gio/gapplicationcommandline.c
++++ b/gio/gapplicationcommandline.c
+@@ -27,7 +27,10 @@
+ #include "gfile.h"
+ 
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ 
+ #ifdef G_OS_UNIX
+ #include "gunixinputstream.h"
+diff --git a/gio/gapplicationimpl-dbus.c b/gio/gapplicationimpl-dbus.c
+index ac6644d..03becdd 100644
+--- a/gio/gapplicationimpl-dbus.c
++++ b/gio/gapplicationimpl-dbus.c
+@@ -32,7 +32,10 @@
+ #include "gdbusconnection.h"
+ #include "gdbusintrospection.h"
+ #include "gdbuserror.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ 
+ #include <string.h>
+ #include <stdio.h>
+diff --git a/gio/gcontenttype.c b/gio/gcontenttype.c
+index 1e21bbd..fe9d273 100644
+--- a/gio/gcontenttype.c
++++ b/gio/gcontenttype.c
+@@ -26,7 +26,10 @@
+ #include <sys/types.h>
+ #include <stdlib.h>
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include "gcontenttypeprivate.h"
+ #include "gthemedicon.h"
+ #include "gicon.h"
+diff --git a/gio/gcredentials.c b/gio/gcredentials.c
+index ba5be63..cbc0e0e 100644
+--- a/gio/gcredentials.c
++++ b/gio/gcredentials.c
+@@ -28,7 +28,10 @@
+ #include <gobject/gvaluecollector.h>
+ 
+ #include "gcredentials.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gcredentialsprivate.h"
++#pragma GCC diagnostic pop
+ #include "gnetworking.h"
+ #include "gioerror.h"
+ #include "gioenumtypes.h"
+diff --git a/gio/gdatagrambased.c b/gio/gdatagrambased.c
+index f8de372..976d6d2 100644
+--- a/gio/gdatagrambased.c
++++ b/gio/gdatagrambased.c
+@@ -27,7 +27,10 @@
+ #include "gcancellable.h"
+ #include "gioenumtypes.h"
+ #include "gioerror.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gsocketaddress.h"
+ #include "glibintl.h"
+ 
+diff --git a/gio/gdbusaddress.c b/gio/gdbusaddress.c
+index b73ff0d..0515681 100644
+--- a/gio/gdbusaddress.c
++++ b/gio/gdbusaddress.c
+@@ -24,7 +24,10 @@
+ 
+ #include <stdlib.h>
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <errno.h>
+ 
+ #include "gioerror.h"
+diff --git a/gio/gdbusauth.c b/gio/gdbusauth.c
+index b52a06e..51d649f 100644
+--- a/gio/gdbusauth.c
++++ b/gio/gdbusauth.c
+@@ -33,7 +33,10 @@
+ #include "gdbusutils.h"
+ #include "gioenumtypes.h"
+ #include "gcredentials.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gcredentialsprivate.h"
++#pragma GCC diagnostic pop
+ #include "gdbusprivate.h"
+ #include "giostream.h"
+ #include "gdatainputstream.h"
+diff --git a/gio/gdbusauthmechanismsha1.c b/gio/gdbusauthmechanismsha1.c
+index c8aa089..50d6a2e 100644
+--- a/gio/gdbusauthmechanismsha1.c
++++ b/gio/gdbusauthmechanismsha1.c
+@@ -27,7 +27,10 @@
+ #include <errno.h>
+ #include <sys/types.h>
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ 
+ #ifdef G_OS_UNIX
+ #include <unistd.h>
+diff --git a/gio/gdbusdaemon.c b/gio/gdbusdaemon.c
+index 70009f9..664e784 100644
+--- a/gio/gdbusdaemon.c
++++ b/gio/gdbusdaemon.c
+@@ -24,7 +24,10 @@
+ #include <string.h>
+ #include <stdlib.h>
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <gstdio.h>
++#pragma GCC diagnostic pop
+ #include <gio/gio.h>
+ #include <gio/gunixsocketaddress.h>
+ #include "gdbusdaemon.h"
+diff --git a/gio/gdbusprivate.c b/gio/gdbusprivate.c
+index 762afce..7e9e90f 100644
+--- a/gio/gdbusprivate.c
++++ b/gio/gdbusprivate.c
+@@ -39,7 +39,10 @@
+ #include "giostream.h"
+ #include "giotypes.h"
+ #include "glib-private.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gmemoryinputstream.h"
+ #include "gsocket.h"
+ #include "gsocketaddress.h"
+diff --git a/gio/gdbusserver.c b/gio/gdbusserver.c
+index db0c9ab..dd2290c 100644
+--- a/gio/gdbusserver.c
++++ b/gio/gdbusserver.c
+@@ -39,7 +39,10 @@
+ #include "gsocketservice.h"
+ #include "gthreadedsocketservice.h"
+ #include "gresolver.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #include "ginetaddress.h"
+ #include "ginetsocketaddress.h"
+ #include "ginputstream.h"
+diff --git a/gio/gdesktopappinfo.c b/gio/gdesktopappinfo.c
+index 1f16132..df32ed5 100644
+--- a/gio/gdesktopappinfo.c
++++ b/gio/gdesktopappinfo.c
+@@ -49,7 +49,10 @@
+ #include "gioerror.h"
+ #include "gthemedicon.h"
+ #include "gfileicon.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ #include "glibintl.h"
+ #include "glib-private.h"
+ #include "giomodule-priv.h"
+diff --git a/gio/gdocumentportal.c b/gio/gdocumentportal.c
+index 382e2aa..0395693 100644
+--- a/gio/gdocumentportal.c
++++ b/gio/gdocumentportal.c
+@@ -27,7 +27,10 @@
+ 
+ #include "gdocumentportal.h"
+ #include "xdp-dbus.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gstdio.h"
++#pragma GCC diagnostic pop
+ 
+ #ifdef G_OS_UNIX
+ #include "gunixfdlist.h"
+diff --git a/gio/gfile.c b/gio/gfile.c
+index 94786c8..49888a7 100644
+--- a/gio/gfile.c
++++ b/gio/gfile.c
+@@ -57,7 +57,10 @@
+ #include <sys/types.h>
+ 
+ #include "gfile.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #ifdef G_OS_UNIX
+ #include "glib-unix.h"
+ #endif
+diff --git a/gio/ginetaddress.c b/gio/ginetaddress.c
+index 66d8897..3f3d65c 100644
+--- a/gio/ginetaddress.c
++++ b/gio/ginetaddress.c
+@@ -31,7 +31,10 @@
+ #include "gioenums.h"
+ #include "gioenumtypes.h"
+ #include "glibintl.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ 
+ struct _GInetAddressPrivate
+ {
+diff --git a/gio/ginetsocketaddress.c b/gio/ginetsocketaddress.c
+index 7693035..c2c1ce1 100644
+--- a/gio/ginetsocketaddress.c
++++ b/gio/ginetsocketaddress.c
+@@ -27,7 +27,10 @@
+ 
+ #include "ginetsocketaddress.h"
+ #include "ginetaddress.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gsocketconnectable.h"
+ #include "gioerror.h"
+ #include "glibintl.h"
+diff --git a/gio/giomodule.c b/gio/giomodule.c
+index 11ce7d8..cafb29e 100644
+--- a/gio/giomodule.c
++++ b/gio/giomodule.c
+@@ -59,7 +59,10 @@
+ #include "gregistrysettingsbackend.h"
+ #include "giowin32-priv.h"
+ #endif
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ 
+ #if defined(G_OS_UNIX) && !defined(__APPLE__)
+ #include "gdesktopappinfo.h"
+diff --git a/gio/gkeyfilesettingsbackend.c b/gio/gkeyfilesettingsbackend.c
+index 79a0266..2d50baf 100644
+--- a/gio/gkeyfilesettingsbackend.c
++++ b/gio/gkeyfilesettingsbackend.c
+@@ -26,7 +26,10 @@
+ #include <glib.h>
+ #include <glibintl.h>
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ 
+ #include "gfile.h"
+diff --git a/gio/glocalfile.c b/gio/glocalfile.c
+index 67d4b99..df4d7e9 100644
+--- a/gio/glocalfile.c
++++ b/gio/glocalfile.c
+@@ -57,7 +57,10 @@
+ 
+ #include "gfileattribute.h"
+ #include "glocalfile.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glocalfileinfo.h"
++#pragma GCC diagnostic pop
+ #include "glocalfileenumerator.h"
+ #include "glocalfileinputstream.h"
+ #include "glocalfileoutputstream.h"
+diff --git a/gio/glocalfileenumerator.c b/gio/glocalfileenumerator.c
+index 21030bd..c3547c0 100644
+--- a/gio/glocalfileenumerator.c
++++ b/gio/glocalfileenumerator.c
+@@ -24,7 +24,10 @@
+ 
+ #include <glib.h>
+ #include <glocalfileenumerator.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glocalfileinfo.h>
++#pragma GCC diagnostic pop
+ #include <glocalfile.h>
+ #include <gioerror.h>
+ #include <string.h>
+diff --git a/gio/glocalfileinfo.c b/gio/glocalfileinfo.c
+index bccad04..3c9abea 100644
+--- a/gio/glocalfileinfo.c
++++ b/gio/glocalfileinfo.c
+@@ -54,7 +54,10 @@
+ 
+ #endif /* HAVE_XATTR */
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ #include <glib/gstdioprivate.h>
+ #include <gfileattribute-priv.h>
+ #include <gfileinfo-priv.h>
+diff --git a/gio/glocalfileinputstream.c b/gio/glocalfileinputstream.c
+index 933f317..7794c77 100644
+--- a/gio/glocalfileinputstream.c
++++ b/gio/glocalfileinputstream.c
+@@ -28,7 +28,10 @@
+ #include <errno.h>
+ 
+ #include <glib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ #include "gcancellable.h"
+ #include "gioerror.h"
+ #include "glocalfileinputstream.h"
+diff --git a/gio/glocalfileiostream.c b/gio/glocalfileiostream.c
+index 870f3b4..8ad7287 100644
+--- a/gio/glocalfileiostream.c
++++ b/gio/glocalfileiostream.c
+@@ -23,7 +23,10 @@
+ #include "config.h"
+ 
+ #include <glib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ #include "glibintl.h"
+ #include "gioerror.h"
+ #include "gcancellable.h"
+diff --git a/gio/glocalfileoutputstream.c b/gio/glocalfileoutputstream.c
+index 6875811..9b54053 100644
+--- a/gio/glocalfileoutputstream.c
++++ b/gio/glocalfileoutputstream.c
+@@ -34,7 +34,10 @@
+ #include <string.h>
+ 
+ #include <glib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ #include "glibintl.h"
+ #include "gioerror.h"
+ #include "gcancellable.h"
+diff --git a/gio/gmemorymonitordbus.c b/gio/gmemorymonitordbus.c
+index 37542f7..84efb2b 100644
+--- a/gio/gmemorymonitordbus.c
++++ b/gio/gmemorymonitordbus.c
+@@ -26,7 +26,10 @@
+ #include "ginitable.h"
+ #include "giomodule-priv.h"
+ #include "glibintl.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gcancellable.h"
+ #include "gdbusproxy.h"
+ #include "gdbusnamewatching.h"
+diff --git a/gio/gnativesocketaddress.c b/gio/gnativesocketaddress.c
+index 28b90a8..3cbcbb7 100644
+--- a/gio/gnativesocketaddress.c
++++ b/gio/gnativesocketaddress.c
+@@ -26,7 +26,10 @@
+ #include <string.h>
+ 
+ #include "gnativesocketaddress.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gioerror.h"
+ #include "glibintl.h"
+ 
+diff --git a/gio/gnetworkaddress.c b/gio/gnetworkaddress.c
+index 598917d..d37db19 100644
+--- a/gio/gnetworkaddress.c
++++ b/gio/gnetworkaddress.c
+@@ -30,7 +30,10 @@
+ #include "gasyncresult.h"
+ #include "ginetaddress.h"
+ #include "ginetsocketaddress.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gproxyaddressenumerator.h"
+ #include "gresolver.h"
+ #include "gtask.h"
+diff --git a/gio/gnetworking.c b/gio/gnetworking.c
+index fa16238..42aa44c 100644
+--- a/gio/gnetworking.c
++++ b/gio/gnetworking.c
+@@ -22,7 +22,10 @@
+ 
+ #include "config.h"
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworking.h"
++#pragma GCC diagnostic pop
+ 
+ /**
+  * SECTION:gnetworking
+diff --git a/gio/gnetworkmonitornetlink.c b/gio/gnetworkmonitornetlink.c
+index 9d4b0f9..1916363 100644
+--- a/gio/gnetworkmonitornetlink.c
++++ b/gio/gnetworkmonitornetlink.c
+@@ -30,7 +30,10 @@
+ #include "ginitable.h"
+ #include "giomodule-priv.h"
+ #include "glibintl.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gnetworkingprivate.h"
+ #include "gnetworkmonitor.h"
+ #include "gsocket.h"
+diff --git a/gio/gnetworkmonitornm.c b/gio/gnetworkmonitornm.c
+index 207d50d..3de49b2 100644
+--- a/gio/gnetworkmonitornm.c
++++ b/gio/gnetworkmonitornm.c
+@@ -29,7 +29,10 @@
+ #include "ginitable.h"
+ #include "giomodule-priv.h"
+ #include "glibintl.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gnetworkingprivate.h"
+ #include "gnetworkmonitor.h"
+ #include "gdbusproxy.h"
+diff --git a/gio/gnetworkservice.c b/gio/gnetworkservice.c
+index 8fa74ec..9601e4d 100644
+--- a/gio/gnetworkservice.c
++++ b/gio/gnetworkservice.c
+@@ -31,7 +31,10 @@
+ #include "ginetsocketaddress.h"
+ #include "gioerror.h"
+ #include "gnetworkaddress.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gresolver.h"
+ #include "gtask.h"
+ #include "gsocketaddressenumerator.h"
+diff --git a/gio/gopenuriportal.c b/gio/gopenuriportal.c
+index c0f44a9..330cf4a 100644
+--- a/gio/gopenuriportal.c
++++ b/gio/gopenuriportal.c
+@@ -27,7 +27,10 @@
+ 
+ #include "gopenuriportal.h"
+ #include "xdp-dbus.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gstdio.h"
++#pragma GCC diagnostic pop
+ 
+ #ifdef G_OS_UNIX
+ #include "gunixfdlist.h"
+diff --git a/gio/gpowerprofilemonitordbus.c b/gio/gpowerprofilemonitordbus.c
+index ac6f8a8..e9e25c5 100644
+--- a/gio/gpowerprofilemonitordbus.c
++++ b/gio/gpowerprofilemonitordbus.c
+@@ -27,7 +27,10 @@
+ #include "ginitable.h"
+ #include "giomodule-priv.h"
+ #include "glibintl.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gcancellable.h"
+ #include "gdbusproxy.h"
+ #include "gdbusnamewatching.h"
+diff --git a/gio/gproxyaddressenumerator.c b/gio/gproxyaddressenumerator.c
+index 4e6d58a..60898bd 100644
+--- a/gio/gproxyaddressenumerator.c
++++ b/gio/gproxyaddressenumerator.c
+@@ -30,7 +30,10 @@
+ #include "gioerror.h"
+ #include "glibintl.h"
+ #include "gnetworkaddress.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gproxy.h"
+ #include "gproxyaddress.h"
+ #include "gproxyresolver.h"
+diff --git a/gio/gproxyresolver.c b/gio/gproxyresolver.c
+index 8a69b20..25a9558 100644
+--- a/gio/gproxyresolver.c
++++ b/gio/gproxyresolver.c
+@@ -33,7 +33,10 @@
+ #include "giomodule.h"
+ #include "gioerror.h"
+ #include "giomodule-priv.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ 
+ /**
+  * SECTION:gproxyresolver
+diff --git a/gio/gresolver.c b/gio/gresolver.c
+index 6a735e8..c491b90 100644
+--- a/gio/gresolver.c
++++ b/gio/gresolver.c
+@@ -26,7 +26,10 @@
+ #include "glibintl.h"
+ 
+ #include "gresolver.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gasyncresult.h"
+ #include "ginetaddress.h"
+ #include "gtask.h"
+diff --git a/gio/gresource.c b/gio/gresource.c
+index 4ccd333..af68486 100644
+--- a/gio/gresource.c
++++ b/gio/gresource.c
+@@ -27,7 +27,10 @@
+ #include "gresource.h"
+ #include <gvdb/gvdb-reader.h>
+ #include <gi18n-lib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <gstdio.h>
++#pragma GCC diagnostic pop
+ #include <gio/gfile.h>
+ #include <gio/gioerror.h>
+ #include <gio/gmemoryinputstream.h>
+diff --git a/gio/gresourcefile.c b/gio/gresourcefile.c
+index 488fa34..af9f183 100644
+--- a/gio/gresourcefile.c
++++ b/gio/gresourcefile.c
+@@ -37,7 +37,10 @@
+ #include "gfileenumerator.h"
+ #include "gcontenttype.h"
+ #include "gioerror.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <glib/gstdio.h>
++#pragma GCC diagnostic pop
+ #include "glibintl.h"
+ 
+ struct _GResourceFile
+diff --git a/gio/gsimpleproxyresolver.c b/gio/gsimpleproxyresolver.c
+index 8de26cb..c47c0b3 100644
+--- a/gio/gsimpleproxyresolver.c
++++ b/gio/gsimpleproxyresolver.c
+@@ -27,7 +27,10 @@
+ #include "gsimpleproxyresolver.h"
+ #include "ginetaddress.h"
+ #include "ginetaddressmask.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gtask.h"
+ 
+ #include "glibintl.h"
+diff --git a/gio/gsocket.c b/gio/gsocket.c
+index 2dc005b..2d56bdf 100644
+--- a/gio/gsocket.c
++++ b/gio/gsocket.c
+@@ -70,7 +70,10 @@
+ #include "gioerror.h"
+ #include "gioenums.h"
+ #include "gioerror.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gsocketaddress.h"
+ #include "gsocketcontrolmessage.h"
+ #include "gcredentials.h"
+diff --git a/gio/gsocketaddress.c b/gio/gsocketaddress.c
+index 994037c..3b9310d 100644
+--- a/gio/gsocketaddress.c
++++ b/gio/gsocketaddress.c
+@@ -29,7 +29,10 @@
+ #include "ginetaddress.h"
+ #include "ginetsocketaddress.h"
+ #include "gnativesocketaddress.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "gproxyaddress.h"
+ #include "gproxyaddressenumerator.h"
+ #include "gsocketaddressenumerator.h"
+diff --git a/gio/gsocketclient.c b/gio/gsocketclient.c
+index f7fb567..c13d942 100644
+--- a/gio/gsocketclient.c
++++ b/gio/gsocketclient.c
+@@ -45,7 +45,10 @@
+ #include <gio/gioerror.h>
+ #include <gio/gsocket.h>
+ #include <gio/gnetworkaddress.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <gio/gnetworking.h>
++#pragma GCC diagnostic pop
+ #include <gio/gnetworkservice.h>
+ #include <gio/gproxy.h>
+ #include <gio/gproxyresolver.h>
+diff --git a/gio/gsocketcontrolmessage.c b/gio/gsocketcontrolmessage.c
+index 398e04e..d3f90b5 100644
+--- a/gio/gsocketcontrolmessage.c
++++ b/gio/gsocketcontrolmessage.c
+@@ -47,7 +47,10 @@
+ 
+ #include "config.h"
+ #include "gsocketcontrolmessage.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ #include "glibintl.h"
+ 
+ #ifndef G_OS_WIN32
+diff --git a/gio/gsubprocess.c b/gio/gsubprocess.c
+index c4747a1..556d2df 100644
+--- a/gio/gsubprocess.c
++++ b/gio/gsubprocess.c
+@@ -99,7 +99,10 @@
+ #include <gio/gunixoutputstream.h>
+ #include <gio/gfiledescriptorbased.h>
+ #include <gio/gunixinputstream.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <gstdio.h>
++#pragma GCC diagnostic pop
+ #include <glib-unix.h>
+ #include <fcntl.h>
+ #endif
+diff --git a/gio/gtestdbus.c b/gio/gtestdbus.c
+index 34cead1..6b7212e 100644
+--- a/gio/gtestdbus.c
++++ b/gio/gtestdbus.c
+@@ -25,7 +25,10 @@
+ #include "config.h"
+ 
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <errno.h>
+ #include <string.h>
+ #include <gstdio.h>
+diff --git a/gio/gthreadedresolver.c b/gio/gthreadedresolver.c
+index 68b5c20..503c7ff 100644
+--- a/gio/gthreadedresolver.c
++++ b/gio/gthreadedresolver.c
+@@ -25,11 +25,14 @@
+ #include <glib.h>
+ #include "glibintl.h"
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
+ #include <string.h>
+ 
+ #include "gthreadedresolver.h"
+ #include "gnetworkingprivate.h"
++#pragma GCC diagnostic pop
+ 
+ #include "gcancellable.h"
+ #include "ginetaddress.h"
+diff --git a/gio/gtrashportal.c b/gio/gtrashportal.c
+index 0e1d109..244b9ad 100644
+--- a/gio/gtrashportal.c
++++ b/gio/gtrashportal.c
+@@ -27,7 +27,10 @@
+ 
+ #include "gtrashportal.h"
+ #include "xdp-dbus.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gstdio.h"
++#pragma GCC diagnostic pop
+ 
+ #ifdef G_OS_UNIX
+ #include "gunixfdlist.h"
+diff --git a/gio/gunixconnection.c b/gio/gunixconnection.c
+index c012fcb..531108d 100644
+--- a/gio/gunixconnection.c
++++ b/gio/gunixconnection.c
+@@ -17,7 +17,10 @@
+ #include "config.h"
+ 
+ #include "gunixconnection.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworking.h"
++#pragma GCC diagnostic pop
+ #include "gsocket.h"
+ #include "gsocketcontrolmessage.h"
+ #include "gunixcredentialsmessage.h"
+diff --git a/gio/gunixcredentialsmessage.c b/gio/gunixcredentialsmessage.c
+index 212c4b0..f400459 100644
+--- a/gio/gunixcredentialsmessage.c
++++ b/gio/gunixcredentialsmessage.c
+@@ -56,7 +56,10 @@
+ 
+ #include "gunixcredentialsmessage.h"
+ #include "gcredentials.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gcredentialsprivate.h"
++#pragma GCC diagnostic pop
+ #include "gnetworking.h"
+ 
+ #include "glibintl.h"
+diff --git a/gio/gunixfdlist.c b/gio/gunixfdlist.c
+index e061714..d9e5e0a 100644
+--- a/gio/gunixfdlist.c
++++ b/gio/gunixfdlist.c
+@@ -49,7 +49,10 @@
+ #include <errno.h>
+ 
+ #include "gunixfdlist.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworking.h"
++#pragma GCC diagnostic pop
+ #include "gioerror.h"
+ #include "glib/glib-private.h"
+ #include "glib/gstdio.h"
+diff --git a/gio/gunixfdmessage.c b/gio/gunixfdmessage.c
+index 889a0c9..483e00e 100644
+--- a/gio/gunixfdmessage.c
++++ b/gio/gunixfdmessage.c
+@@ -52,7 +52,10 @@
+ 
+ #include "gunixfdmessage.h"
+ #include "gunixfdlist.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworking.h"
++#pragma GCC diagnostic pop
+ #include "gioerror.h"
+ 
+ struct _GUnixFDMessagePrivate
+diff --git a/gio/gunixinputstream.c b/gio/gunixinputstream.c
+index 2180ce8..89de80c 100644
+--- a/gio/gunixinputstream.c
++++ b/gio/gunixinputstream.c
+@@ -24,7 +24,10 @@
+ 
+ #include <unistd.h>
+ #include <errno.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ 
+ #include <glib.h>
+ #include <glib/gstdio.h>
+diff --git a/gio/gunixmount.c b/gio/gunixmount.c
+index 7055d8e..a8376a9 100644
+--- a/gio/gunixmount.c
++++ b/gio/gunixmount.c
+@@ -44,7 +44,10 @@
+ #include "gioerror.h"
+ #include "glibintl.h"
+ /* for BUFSIZ */
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ 
+ 
+ struct _GUnixMount {
+diff --git a/gio/gunixmounts.c b/gio/gunixmounts.c
+index 9e97ef1..bb2ab28 100644
+--- a/gio/gunixmounts.c
++++ b/gio/gunixmounts.c
+@@ -37,7 +37,10 @@
+ #ifdef HAVE_POLL
+ #include <poll.h>
+ #endif
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <unistd.h>
+ #include <sys/time.h>
+ #include <errno.h>
+diff --git a/gio/gunixoutputstream.c b/gio/gunixoutputstream.c
+index 8a71c31..20c44f2 100644
+--- a/gio/gunixoutputstream.c
++++ b/gio/gunixoutputstream.c
+@@ -24,7 +24,10 @@
+ 
+ #include <unistd.h>
+ #include <errno.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <sys/uio.h>
+ 
+ #include <glib.h>
+diff --git a/gio/gunixsocketaddress.c b/gio/gunixsocketaddress.c
+index 3ccb2cb..3995156 100644
+--- a/gio/gunixsocketaddress.c
++++ b/gio/gunixsocketaddress.c
+@@ -28,7 +28,10 @@
+ #include "gunixsocketaddress.h"
+ #include "gsocketconnectable.h"
+ #include "glibintl.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gnetworking.h"
++#pragma GCC diagnostic pop
+ 
+ #ifdef G_OS_WIN32
+ #include "giowin32-afunix.h"
+diff --git a/gio/gunixvolume.c b/gio/gunixvolume.c
+index a0f00ff..0817425 100644
+--- a/gio/gunixvolume.c
++++ b/gio/gunixvolume.c
+@@ -40,7 +40,10 @@
+ #include "gioerror.h"
+ #include "glibintl.h"
+ /* for BUFSIZ */
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ 
+ 
+ struct _GUnixVolume {
+diff --git a/gio/thumbnail-verify.c b/gio/thumbnail-verify.c
+index 7ffcef1..6b99ab3 100644
+--- a/gio/thumbnail-verify.c
++++ b/gio/thumbnail-verify.c
+@@ -20,7 +20,10 @@
+ 
+ #include "config.h"
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "thumbnail-verify.h"
++#pragma GCC diagnostic pop
+ 
+ #include <string.h>
+ 
+diff --git a/glib/gbacktrace.c b/glib/gbacktrace.c
+index b708b16..8833df9 100644
+--- a/glib/gbacktrace.c
++++ b/glib/gbacktrace.c
+@@ -34,7 +34,10 @@
+ 
+ #include <signal.h>
+ #include <stdarg.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <stdlib.h>
+ 
+ #ifdef HAVE_SYS_TIME_H
+diff --git a/glib/gbookmarkfile.c b/glib/gbookmarkfile.c
+index 3988e36..9b1c9e4 100644
+--- a/glib/gbookmarkfile.c
++++ b/glib/gbookmarkfile.c
+@@ -19,10 +19,12 @@
+  */
+ 
+ #include "config.h"
+-
+ #include "gbookmarkfile.h"
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <stdlib.h>
+ #include <string.h>
+ #include <errno.h>
+diff --git a/glib/gcharset.c b/glib/gcharset.c
+index 82cd0a7..a4b8164 100644
+--- a/glib/gcharset.c
++++ b/glib/gcharset.c
+@@ -37,7 +37,10 @@
+ #include "libcharset/libcharset.h"
+ 
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ 
+ #if (HAVE_LANGINFO_TIME_CODESET || HAVE_LANGINFO_CODESET)
+ #include <langinfo.h>
+diff --git a/glib/gconvert.c b/glib/gconvert.c
+index 829fe38..6276f03 100644
+--- a/glib/gconvert.c
++++ b/glib/gconvert.c
+@@ -27,7 +27,10 @@
+ #include <iconv.h>
+ #endif
+ #include <errno.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ #include <stdlib.h>
+ 
+diff --git a/glib/gdir.c b/glib/gdir.c
+index c9283de..8ec24b5 100644
+--- a/glib/gdir.c
++++ b/glib/gdir.c
+@@ -26,7 +26,10 @@
+ 
+ #include <errno.h>
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <sys/stat.h>
+ 
+ #ifdef HAVE_DIRENT_H
+diff --git a/glib/gfileutils.c b/glib/gfileutils.c
+index 4ed8171..bb67ee5 100644
+--- a/glib/gfileutils.c
++++ b/glib/gfileutils.c
+@@ -22,7 +22,10 @@
+ #include "glibconfig.h"
+ 
+ #include <sys/stat.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <stdlib.h>
+ #include <stdarg.h>
+ #include <string.h>
+diff --git a/glib/giounix.c b/glib/giounix.c
+index 9d9492b..9c19e71 100644
+--- a/glib/giounix.c
++++ b/glib/giounix.c
+@@ -37,7 +37,10 @@
+ 
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <unistd.h>
+ #include <errno.h>
+ #include <string.h>
+diff --git a/glib/gkeyfile.c b/glib/gkeyfile.c
+index 9a4821b..3ac68a2 100644
+--- a/glib/gkeyfile.c
++++ b/glib/gkeyfile.c
+@@ -32,7 +32,10 @@
+ #include <fcntl.h>
+ #include <locale.h>
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <stdlib.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+diff --git a/glib/glib-init.c b/glib/glib-init.c
+index c513f51..bf206dc 100644
+--- a/glib/glib-init.c
++++ b/glib/glib-init.c
+@@ -30,7 +30,10 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <ctype.h>
+ 
+ /* Deliberately not checking HAVE_STDINT_H here: we officially require a
+diff --git a/glib/gmappedfile.c b/glib/gmappedfile.c
+index 4d7a89e..a6cb259 100644
+--- a/glib/gmappedfile.c
++++ b/glib/gmappedfile.c
+@@ -60,7 +60,10 @@
+ #include "gmappedfile.h"
+ #include "gmem.h"
+ #include "gmessages.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gstrfuncs.h"
+ #include "gatomic.h"
+ 
+diff --git a/glib/gmarkup.c b/glib/gmarkup.c
+index 0c2a9be..907cd83 100644
+--- a/glib/gmarkup.c
++++ b/glib/gmarkup.c
+@@ -23,7 +23,10 @@
+ 
+ #include <stdarg.h>
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <stdlib.h>
+ #include <errno.h>
+ 
+diff --git a/glib/gmem.c b/glib/gmem.c
+index 7e19aed..cf5ce98 100644
+--- a/glib/gmem.c
++++ b/glib/gmem.c
+@@ -38,7 +38,10 @@
+ 
+ #if defined(HAVE_MEMALIGN) || defined(HAVE__ALIGNED_MALLOC)
+ /* Required for _aligned_malloc() and _aligned_free() on Windows */
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <malloc.h>
++#pragma GCC diagnostic pop
+ #endif
+ 
+ #ifdef HAVE__ALIGNED_MALLOC
+diff --git a/glib/gmessages.c b/glib/gmessages.c
+index 541b081..c32782d 100644
+--- a/glib/gmessages.c
++++ b/glib/gmessages.c
+@@ -172,7 +172,10 @@
+ 
+ #include <stdlib.h>
+ #include <stdarg.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ #include <signal.h>
+ #include <locale.h>
+diff --git a/glib/goption.c b/glib/goption.c
+index 0b3a05e..9e951f1 100644
+--- a/glib/goption.c
++++ b/glib/goption.c
+@@ -183,7 +183,10 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <errno.h>
+ 
+ #if defined __OpenBSD__
+diff --git a/glib/gprintf.c b/glib/gprintf.c
+index a0ccef9..49fc0b2 100644
+--- a/glib/gprintf.c
++++ b/glib/gprintf.c
+@@ -21,7 +21,10 @@
+ 
+ #include <stdarg.h>
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <errno.h>
+ 
+ #include "gprintf.h"
+diff --git a/glib/grand.c b/glib/grand.c
+index 5fb4457..7ee4c74 100644
+--- a/glib/grand.c
++++ b/glib/grand.c
+@@ -41,7 +41,10 @@
+ 
+ #include <math.h>
+ #include <errno.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ #include <sys/types.h>
+ #include "grand.h"
+diff --git a/glib/gscanner.c b/glib/gscanner.c
+index 451feb6..a7515aa 100644
+--- a/glib/gscanner.c
++++ b/glib/gscanner.c
+@@ -37,7 +37,10 @@
+ #include <stdlib.h>
+ #include <stdarg.h>
+ #include <string.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ 
+ #include "gscanner.h"
+ 
+diff --git a/glib/gslice.c b/glib/gslice.c
+index 6bcb202..4ae33ed 100644
+--- a/glib/gslice.c
++++ b/glib/gslice.c
+@@ -21,7 +21,10 @@
+ #include "config.h"
+ #include "glibconfig.h"
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ 
+ #include "gslice.h"
+diff --git a/glib/gspawn.c b/glib/gspawn.c
+index bca37da..e3fce0c 100644
+--- a/glib/gspawn.c
++++ b/glib/gspawn.c
+@@ -58,7 +58,10 @@
+ #include "gspawn-private.h"
+ #include "gthread.h"
+ #include "gtrace-private.h"
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "glib/gstdio.h"
++#pragma GCC diagnostic pop
+ 
+ #include "genviron.h"
+ #include "gmem.h"
+diff --git a/glib/gstdio.c b/glib/gstdio.c
+index 56a3d02..ec4fdb8 100644
+--- a/glib/gstdio.c
++++ b/glib/gstdio.c
+@@ -46,7 +46,10 @@
+ #include <errno.h>
+ #endif
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gstdio.h"
++#pragma GCC diagnostic pop
+ #include "gstdioprivate.h"
+ 
+ #if !defined (G_OS_UNIX) && !defined (G_OS_WIN32)
+diff --git a/glib/gstrfuncs.c b/glib/gstrfuncs.c
+index 391cf56..d467893 100644
+--- a/glib/gstrfuncs.c
++++ b/glib/gstrfuncs.c
+@@ -31,7 +31,10 @@
+ #include "config.h"
+ 
+ #include <stdarg.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <stdlib.h>
+ #include <locale.h>
+ #include <string.h>
+diff --git a/glib/gstring.c b/glib/gstring.c
+index ad6b922..7b109af 100644
+--- a/glib/gstring.c
++++ b/glib/gstring.c
+@@ -32,7 +32,10 @@
+ 
+ #include <stdarg.h>
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ #include <ctype.h>
+ 
+diff --git a/glib/gtestutils.c b/glib/gtestutils.c
+index e98294e..3b9e0a9 100644
+--- a/glib/gtestutils.c
++++ b/glib/gtestutils.c
+@@ -32,7 +32,10 @@
+ #endif
+ #include <string.h>
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #ifdef HAVE_SYS_RESOURCE_H
+ #include <sys/resource.h>
+ #endif
+diff --git a/glib/gthread-posix.c b/glib/gthread-posix.c
+index be960d3..bbc5a50 100644
+--- a/glib/gthread-posix.c
++++ b/glib/gthread-posix.c
+@@ -52,7 +52,10 @@
+ #include "gutils.h"
+ 
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <string.h>
+ #include <errno.h>
+ #include <pthread.h>
+diff --git a/glib/gtimezone.c b/glib/gtimezone.c
+index 4a4a2d0..333587f 100644
+--- a/glib/gtimezone.c
++++ b/glib/gtimezone.c
+@@ -42,7 +42,10 @@
+ #include "genviron.h"
+ 
+ #ifdef G_OS_UNIX
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include "gstdio.h"
++#pragma GCC diagnostic pop
+ #endif
+ 
+ #ifdef G_OS_WIN32
+diff --git a/glib/gutils.c b/glib/gutils.c
+index dce7cbe..a7dfaaf 100644
+--- a/glib/gutils.c
++++ b/glib/gutils.c
+@@ -35,7 +35,10 @@
+ 
+ #include <stdarg.h>
+ #include <stdlib.h>
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ #include <stdio.h>
++#pragma GCC diagnostic pop
+ #include <locale.h>
+ #include <string.h>
+ #include <ctype.h>		/* For tolower() */

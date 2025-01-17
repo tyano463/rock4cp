@@ -34,6 +34,7 @@ CAIRO_CONF_OPTS = \
 	-Ddwrite=disabled \
 	-Dfontconfig=enabled \
 	-Dquartz=disabled \
+	-Dglib=enabled \
 	-Dtests=disabled \
 	-Dspectre=disabled \
 	-Dsymbol-lookup=disabled \
