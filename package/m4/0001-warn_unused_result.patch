@@ -1,0 +1,13 @@
+diff --git a/m4/gnulib-common.m4 b/m4/gnulib-common.m4
+index 7db4be1..59e13ae 100644
+--- a/m4/gnulib-common.m4
++++ b/m4/gnulib-common.m4
+@@ -212,7 +212,7 @@ AC_DEFUN([gl_COMMON_BODY], [
+ # define _GL_ATTRIBUTE_MALLOC
+ #endif
+ 
+-#if 201710L < __STDC_VERSION__
++#if 201710L < __STDC_VERSION__ && defined __cplusplus
+ # define _GL_ATTRIBUTE_NODISCARD [[__nodiscard__]]
+ #elif _GL_HAS_ATTRIBUTE (warn_unused_result)
+ # define _GL_ATTRIBUTE_NODISCARD __attribute__ ((__warn_unused_result__))

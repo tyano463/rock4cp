@@ -33,5 +33,7 @@ else
 GMP_CONF_OPTS += --disable-cxx
 endif
 
+HOST_GMP_CONF_OPTS += "CFLAGS=-std=c99"
+
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))
